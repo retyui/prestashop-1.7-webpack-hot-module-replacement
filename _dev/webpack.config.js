@@ -22,6 +22,10 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
+var ref;
+const HOT = ((ref = module.parent.filename) != null ? ref.indexOf('hot.webpack.js') : void 0) !== -1;
+console.log('Webpack HOT : ',HOT,'\n');
+
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -39,28 +43,49 @@ if (production) {
     })
   );
 }
+if (HOT) {
+  plugins.push(new webpack.HotModuleReplacementPlugin())
+}
 
 plugins.push(
   new ExtractTextPlugin(
-    path.join(
-      '..', 'css', 'theme.css'
-    )
+    path.join('..', 'css', 'theme.css')
+    ,{
+      disable: HOT // if hot enabled disable ExtractTextPlugin
+    }
   )
 );
 
+// plugins.unshift({
+//   apply: (compiler) => { // min plugin clear folder
+//     let rimraf = require(`rimraf`);
+//     [`/`, `/../css`].forEach((subPath) => {
+//       rimraf.sync(path.resolve(compiler.options.output.path + subPath));
+//     });
+//   }
+// });
+
+
+let addHOT = (arr, disable) => {
+  if (HOT) {
+    arr.unshift('webpack/hot/dev-server', 'webpack-hot-middleware/client');
+  }
+  return arr;
+};
+
 module.exports = {
-  entry: [
-    './js/theme.js'
-  ],
+  entry: {
+    theme: addHOT(['./js/theme.js'])
+  },
   output: {
-    path: '../assets/js',
+    path: path.resolve(__dirname + '/../assets/js'),
     filename: 'theme.js'
   },
   module: {
     loaders: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      loaders: ['babel-loader']
+      loaders: (HOT? ['monkey-hot-loader','babel-loader']: ['babel-loader'])
     }, {
       test: /\.scss$/,
       loader: ExtractTextPlugin.extract(
@@ -83,7 +108,7 @@ module.exports = {
     $: '$',
     jquery: 'jQuery'
   },
-  devtool: 'source-map',
+  devtool: HOT ? 'cheap-module-inline-source-map' : 'source-map',
   plugins: plugins,
   resolve: {
     extensions: ['', '.js', '.scss']

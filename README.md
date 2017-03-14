@@ -10,7 +10,7 @@ yarn
 
 Start hot:
 ```
-hpm run hot
+npm run hot
 //or
 yarn run hot
 ```

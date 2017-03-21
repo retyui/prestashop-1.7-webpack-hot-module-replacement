@@ -3,7 +3,7 @@
 ## If not working file watcher, add
 ```js
 plugins.push(
-new webpack.OldWatchingPlugin()
+  new webpack.OldWatchingPlugin()
 );
 ```
 in webpack.config.js, for webpack 1.12+ version.

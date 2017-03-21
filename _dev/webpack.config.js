@@ -32,16 +32,6 @@ plugins.push(
   )
 );
 
-// plugins.unshift({
-//   apply: (compiler) => { // min plugin clear folder
-//     let rimraf = require(`rimraf`);
-//     [`/`, `/../css`].forEach((subPath) => {
-//       rimraf.sync(path.resolve(compiler.options.output.path + subPath));
-//     });
-//   }
-// });
-
-
 let addHOT = (arr, disable) => {
   if (HOT) {
     arr.unshift('webpack/hot/dev-server', 'webpack-hot-middleware/client');

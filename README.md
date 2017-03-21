@@ -1,7 +1,7 @@
 # PrestaShop Classic Theme Example hot module replacement
 
 ## If not working file watcher, add
-```
+```js
 plugins.push(
 new webpack.OldWatchingPlugin()
 );
@@ -11,7 +11,7 @@ Thx Damir Glax!
 
 
 ## Install :
-```
+```bash
 cd _dev
 npm i 
 //or
@@ -19,7 +19,7 @@ yarn
 ```
 
 ## Start hot:
-```
+```bash
 npm run hot
 //or
 yarn run hot

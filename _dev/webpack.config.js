@@ -69,11 +69,14 @@ module.exports = {
         "css?sourceMap!postcss!sass?sourceMap"
       )
     }, {
-      test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
+      test: /.(png|woff(2)?|eot|ttf|svg|jpe?g)(\?[a-z0-9=\.]+)?$/,
       loader: 'file-loader?name=../css/[hash].[ext]'
     }, {
       test: /\.css$/,
-      loader: "style-loader!css-loader!postcss-loader"
+      loader: ExtractTextPlugin.extract(
+        "style",
+        "css?sourceMap!postcss"
+      )
     }]
   },
   postcss: function() {

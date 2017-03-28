@@ -1,5 +1,7 @@
 # PrestaShop Classic Theme Example hot module replacement
 
+#### webpack 2.x hot module replacement example:  https://github.com/retyui/prestashop-1.7-webpack-2-hot-module-replacement
+
 ## If not working file watcher, add
 ```js
 plugins.push(
